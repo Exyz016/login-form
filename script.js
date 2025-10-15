@@ -69,10 +69,9 @@ async function handleLogin(event) {
 
     if (user) {
         document.getElementById('loginForm').reset(); // Reset login form
-        window.location.href = "KoZe-Playground/index.html";
+        window.location.href = "https://ezok016.github.io/login-form/KoZe-Playground/index.html";
     } else {
         showMessage("Invalid login details", "error");
     }
 
 }
-
