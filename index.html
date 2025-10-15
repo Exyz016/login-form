@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Formulär</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="auth-main">
+        <div class="auth-container">
+            <div class="auth-tabs">
+                <button class="tab-button active" data-tab="login" onclick="switchTab('login')">Login</button>
+                <button class="tab-button" data-tab="register" onclick="switchTab('register')">Register</button>
+            </div>
+            
+            <!-- Login Form -->
+            <div id="login-form" class="form-container active">
+                <h2 class="form-title">Welcome Back</h2>
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="login-email" class="form-label">Email</label>
+                        <input type="email" id="login-email" name="email" class="form-input"
+                            placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password" class="form-label">Password</label>
+                        <input type="password" id="login-password" name="password" class="form-input"
+                            placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="form-button">Sign In</button>
+                </form>
+            </div>
+            
+            <!-- Register Form -->
+            <div id="register-form" class="form-container">
+                <h2 class="form-title">Create Account</h2>
+                <form id="registerForm" onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label for="register-fullname" class="form-label">Full name</label>
+                        <input type="text" id="register-fullname" name="fullname" class="form-input"
+                            placeholder="Enter your full name (Optional)">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email" class="form-label">Email</label>
+                        <input type="email" id="register-email" name="email" class="form-input" 
+                            placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password" class="form-label">Password</label>
+                        <input type="password" id="register-password" name="password" class="form-input"
+                            placeholder="Create a password" required>
+                        <div class="form-help">
+                            Password must be at least 8 characters with uppercase, lowercase, and numbers.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-confirm-password" class="form-label">Confirm Password</label>
+                        <input type="password" id="register-confirm-password" name="confirmPassword" class="form-input"
+                            placeholder="Confirm your password" required>
+                    </div>
+                    <button type="submit" class="form-button">Create Account</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
