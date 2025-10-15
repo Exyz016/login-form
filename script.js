@@ -75,4 +75,3 @@ async function handleLogin(event) {
     }
 
 }
-
