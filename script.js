@@ -1,3 +1,8 @@
+// Mycket av denna javascript-kod är inspirerad av online-resurser.
+// Hanterar användarregistrering och inloggning med localStorage och enkel SHA-256 hashning för lösenord. ( ba för o testa )
+// Visar meddelanden med en "toast" funktion
+// Hanterar tabs mellan inloggning och registrering
+
 function switchTab(tab) {
     document.querySelectorAll('.tab-button').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tab));
     document.querySelectorAll('.form-container').forEach(form => form.classList.toggle('active', form.id === `${tab}-form`));
@@ -28,7 +33,7 @@ function showMessage(message, type = "info") {
         toast.addEventListener('transitionend', () => toast.remove(), { once: true });
     }, REMOVE_AFTER);
 
-    // allow user to click to dismiss early
+    // click to dismiss early
     toast.addEventListener('click', () => {
         toast.classList.remove('visible');
         toast.addEventListener('transitionend', () => toast.remove(), { once: true });
@@ -43,7 +48,7 @@ async function hashPassword(password) {
     return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-async function handleRegister(event) {
+async function handleRegistration(event) {
     event.preventDefault();
     const email = document.getElementById('register-email').value.trim();
     const password = document.getElementById('register-password').value;
@@ -95,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => switchTab(btn.dataset.tab));
     });
     document.getElementById('loginForm').addEventListener('submit', handleLogin);
-    document.getElementById('registerForm').addEventListener('submit', handleRegister);
+    document.getElementById('registerForm').addEventListener('submit', handleRegistration);
 
     // create toast container for inline messages
     if (!document.getElementById('toast-container')) {
