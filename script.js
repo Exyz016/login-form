@@ -1,5 +1,5 @@
 // Mycket av denna javascript-kod är inspirerad av online-resurser.
-// Hanterar användarregistrering och inloggning med localStorage och enkel SHA-256 hashning för lösenord. ( ba för o testa )
+// Hanterar användarregistrering och inloggning med localStorage
 // Visar meddelanden med en "toast" funktion
 // Hanterar tabs mellan inloggning och registrering
 
@@ -9,10 +9,8 @@ function switchTab(tab) {
 }
 
 function showMessage(message, type = "info") {
-    // simple inline toast instead of alert
     const container = document.getElementById('toast-container');
     if (!container) {
-        // fallback (shouldn't happen because we create it on DOMContentLoaded)
         alert(message);
         return;
     }
@@ -23,34 +21,34 @@ function showMessage(message, type = "info") {
 
     container.appendChild(toast);
 
-    // allow CSS entrance transition
     requestAnimationFrame(() => toast.classList.add('visible'));
 
-    // auto-remove
     const REMOVE_AFTER = 3500;
     setTimeout(() => {
         toast.classList.remove('visible');
         toast.addEventListener('transitionend', () => toast.remove(), { once: true });
     }, REMOVE_AFTER);
 
-    // click to dismiss early
     toast.addEventListener('click', () => {
         toast.classList.remove('visible');
         toast.addEventListener('transitionend', () => toast.remove(), { once: true });
     });
 }
 
-// Hash password using SHA-256 ( Found on web )
-async function hashPassword(password) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(password);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+function togglePasswordVisibility(event) {
+    const button = event.currentTarget;
+    const input = button.parentElement.querySelector('input');
+    const type = input.type === 'password' ? 'text' : 'password';
+    input.type = type;
+    
+    button.classList.toggle('fa-eye-slash');
+    button.classList.toggle('fa-eye');
 }
 
 async function handleRegistration(event) {
     event.preventDefault();
     const email = document.getElementById('register-email').value.trim();
+    const gender = document.getElementById('register-gender').value;
     const password = document.getElementById('register-password').value;
     const confirmPassword = document.getElementById('register-confirm-password').value;
 
@@ -70,11 +68,14 @@ async function handleRegistration(event) {
         return;
     }
 
-    const hashedPassword = await hashPassword(password);
-    users.push({ email, password: hashedPassword });
+    users.push({ 
+        email, 
+        gender,
+        password
+    });
     localStorage.setItem('users', JSON.stringify(users));
     showMessage("Registration successful! You can now log in.", "success");
-    document.getElementById('registerForm').reset(); // Reset/empty registration form
+    document.getElementById('registerForm').reset();
     switchTab('login');
 }
 
@@ -84,11 +85,10 @@ async function handleLogin(event) {
     const password = document.getElementById('login-password').value;
 
     const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const hashedPassword = await hashPassword(password);
-    const user = users.find(u => u.email === email && u.password === hashedPassword);
+    const user = users.find(u => u.email === email && u.password === password);
 
     if (user) {
-        document.getElementById('loginForm').reset(); // Reset/empty login form
+        document.getElementById('loginForm').reset();
         window.location.href = "KoZe-Playground/index.html";
     } else {
         showMessage("Invalid login details", "error");
@@ -102,10 +102,21 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('loginForm').addEventListener('submit', handleLogin);
     document.getElementById('registerForm').addEventListener('submit', handleRegistration);
 
-    // create toast container for inline messages
     if (!document.getElementById('toast-container')) {
         const tc = document.createElement('div');
         tc.id = 'toast-container';
         document.body.appendChild(tc);
     }
+    
+    document.querySelectorAll('.toggle-password').forEach(button => {
+        button.addEventListener('click', togglePasswordVisibility);
+    });
+    
+    // Clear all localStorage data for this website ( testing )
+    document.getElementById('clear-data').addEventListener('click', () => {
+        if (confirm('Are you sure you want to clear all stored data? This will remove all registered users.')) {
+            localStorage.clear();
+            showMessage('All stored data has been cleared', 'info');
+        }
+    });
 });
