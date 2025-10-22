@@ -1,3 +1,4 @@
+/* Variables / Root */
 :root {
     --bg-primary: #0a0a0a;
     --bg-tertiary: #1a1a1a;
@@ -16,7 +17,6 @@
     --text-xs: 0.75rem;
     --text-sm: 0.875rem;
     --text-base: 1rem;
-    --text-2xl: 1.5rem;
 
     --radius-md: 0.5rem;
     --radius-2xl: 1.5rem;
@@ -25,6 +25,7 @@
     --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.6);
 }
 
+/* Reset & Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -42,6 +43,7 @@ body {
     padding: var(--space-6);
 }
 
+/* Layout Components */
 .auth-main {
     width: 100%;
     max-width: 500px;
@@ -55,6 +57,7 @@ body {
     box-shadow: var(--shadow-xl);
 }
 
+/* Tab Navigation */
 .auth-tabs {
     display: flex;
     margin-bottom: var(--space-6);
@@ -63,6 +66,157 @@ body {
     padding: var(--space-1);
 }
 
+.tab-button {
+    flex: 1;
+    padding: var(--space-3) var(--space-4);
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: var(--text-base);
+}
+
+.tab-button.active {
+    background: var(--accent-primary);
+    color: var(--bg-primary);
+}
+
+.tab-button:hover:not(.active) {
+    color: var(--text-primary);
+}
+
+/* Form Components */
+.form-container {
+    display: none;
+}
+
+.form-container.active {
+    display: block;
+    animation: fadeInUp 0.3s ease-out;
+}
+
+.form-group {
+    margin-bottom: var(--space-6);
+}
+
+.form-label {
+    display: block;
+    margin-bottom: var(--space-2);
+    font-weight: 500;
+    color: var(--text-primary);
+    font-size: var(--text-sm);
+}
+
+.form-input {
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: var(--text-sm);
+    transition: all var(--transition-fast);
+    font-family: inherit;
+}
+
+/* Select Input Styling */
+select.form-input {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 40px;
+}
+
+/* Input States */
+.form-input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.form-input::placeholder {
+    color: #666666;
+}
+
+/* Password Input Specific */
+.form-password-requirements {
+    font-size: var(--text-xs);
+    color: #a0a0a0;
+    margin-top: var(--space-1);
+    font-style: italic;
+}
+
+.password-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    color: #666666;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.toggle-password:hover {
+    color: var(--text-primary);
+}
+
+/* Buttons */
+.form-button {
+    width: 100%;
+    padding: var(--space-4) var(--space-6);
+    background: var(--accent-primary);
+    color: var(--bg-primary);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: var(--text-base);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    margin-top: var(--space-6);
+}
+
+.form-button:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.clear-data-button {
+    position: fixed;
+    bottom: 1rem;
+    left: 1rem;
+    padding: 0.5rem 1rem;
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: var(--text-sm);
+    opacity: 0.7;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.clear-data-button:hover {
+    opacity: 1;
+    transform: translateY(-1px);
+}
+
+/* Toast Notifications */
 #toast-container {
     position: fixed;
     right: 1rem;
@@ -93,48 +247,9 @@ body {
     transform: translateY(0);
 }
 
-.toast-success {
-    border-left: 4px solid #16a34a;
-}
-
-.toast-error {
-    border-left: 4px solid #ef4444;
-}
-
-.toast-info {
-    border-left: 4px solid var(--accent-primary);
-}
-
-.tab-button {
-    flex: 1;
-    padding: var(--space-3) var(--space-4);
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    font-weight: 600;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: all var(--transition-fast);
-    font-size: var(--text-base);
-}
-
-.tab-button.active {
-    background: var(--accent-primary);
-    color: var(--bg-primary);
-}
-
-.tab-button:hover:not(.active) {
-    color: var(--text-primary);
-}
-
-.form-container {
-    display: none;
-}
-
-.form-container.active {
-    display: block;
-    animation: fadeInUp 0.3s ease-out;
-}
+.toast-success { border-left: 4px solid #16a34a; }
+.toast-error { border-left: 4px solid #ef4444; }
+.toast-info { border-left: 4px solid var(--accent-primary); }
 
 @keyframes fadeInUp {
     from {
@@ -145,90 +260,6 @@ body {
         opacity: 1;
         transform: translateY(0);
     }
-}
-
-.form-title {
-    font-size: var(--text-2xl);
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: var(--space-2);
-}
-
-.form-group {
-    margin-bottom: var(--space-6);
-}
-
-.form-label {
-    display: block;
-    margin-bottom: var(--space-2);
-    font-weight: 500;
-    color: var(--text-primary);
-    font-size: var(--text-sm);
-}
-
-.form-input {
-    width: 100%;
-    padding: var(--space-3) var(--space-4);
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border-primary);
-    border-radius: var(--radius-md);
-    color: var(--text-primary);
-    font-size: var(--text-sm);
-    transition: all var(--transition-fast);
-    font-family: inherit;
-}
-
-.form-input:focus {
-    outline: none;
-    border-color: var(--accent-primary);
-    box-shadow: 0 0 0 3px var(--accent-glow);
-}
-
-.form-input::placeholder {
-    color: #666666;
-}
-
-.checkbox-label {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    color: var(--text-secondary);
-    font-size: var(--text-sm);
-    cursor: pointer;
-}
-
-.checkbox-label input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-    accent-color: var(--accent-primary);
-    cursor: pointer;
-}
-
-.form-password-requirements {
-    font-size: var(--text-xs);
-    color: #a0a0a0;
-    margin-top: var(--space-1);
-    font-style: italic;
-}
-
-.form-button {
-    width: 100%;
-    padding: var(--space-4) var(--space-6);
-    background: var(--accent-primary);
-    color: var(--bg-primary);
-    border: none;
-    border-radius: var(--radius-md);
-    font-size: var(--text-base);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-    margin-top: var(--space-6);
-}
-
-.form-button:hover {
-    background: #2563eb;
-    transform: translateY(-1px);
-    box-shadow: 0 0 20px var(--accent-glow);
 }
 
 @media (max-width: 768px) {
